@@ -3,9 +3,14 @@ module Http.Extra exposing (..)
 {-| Convenience functions for working with Http
 
 
+# Types
+
+@docs NoContent
+
+
 # Expects
 
-@docs expectJsonResponse, expectValue, expectNothing
+@docs expectJsonResponse, expectValue, expectNoContent
 
 -}
 
@@ -37,9 +42,16 @@ expectValue a =
     Http.expectStringResponse (\_ -> Ok a)
 
 
-{-| Complete a request with a `()` value. Skips JSON decoding to always complete
-with `()`, regardless of what the server returns.
+{-| A value representing a response that has no content. Like such a response,
+this value contains no information and has one value.
 -}
-expectNothing : Expect ()
-expectNothing =
-    expectValue ()
+type NoContent
+    = NoContent
+
+
+{-| Complete a request with `NoContent` value. Skips JSON decoding to always
+complete with `NoContent`, regardless of what the server returns.
+-}
+expectNoContent : Expect NoContent
+expectNoContent =
+    expectValue NoContent
