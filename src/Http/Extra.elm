@@ -1,4 +1,10 @@
-module Http.Extra exposing (..)
+module Http.Extra
+    exposing
+        ( NoContent(..)
+        , expectJsonResponse
+        , expectNoContent
+        , expectValue
+        )
 
 {-| Convenience functions for working with Http
 
