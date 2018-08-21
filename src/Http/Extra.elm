@@ -28,7 +28,15 @@ expectJsonResponse decoder =
         (\response ->
             response.body
                 |> Decode.decodeString decoder
-                |> Result.map (\a -> { response | body = a })
+                |> Result.mapError Decode.errorToString
+                |> Result.map
+                    (\a ->
+                        { body = a
+                        , url = response.url
+                        , status = response.status
+                        , headers = response.headers
+                        }
+                    )
         )
 
 
